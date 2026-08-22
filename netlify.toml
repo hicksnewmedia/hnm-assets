@@ -1,0 +1,29 @@
+# assets.hicksnewmedia.com
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Function routes must come before the SPA catch-all, or the catch-all
+# swallows them and /api/render returns index.html.
+[[redirects]]
+  from = "/api/render"
+  to = "/.netlify/functions/render-dispatch"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
