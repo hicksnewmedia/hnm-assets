@@ -8,8 +8,8 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Function routes must come before the SPA catch-all, or the catch-all
-# swallows them and /api/render returns index.html.
+# Function route MUST precede the SPA catch-all, or the catch-all swallows it
+# and /api/render returns index.html.
 [[redirects]]
   from = "/api/render"
   to = "/.netlify/functions/render-dispatch"

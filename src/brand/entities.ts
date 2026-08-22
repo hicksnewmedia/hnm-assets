@@ -1,47 +1,67 @@
+export type Treatment = 'glitch' | 'stamp' | 'editorial' | 'terminal';
+
 export interface BrandEntity {
   id: string;
   name: string;
-  /** Wordmark split into three parts: the middle one takes the accent color. */
-  parts: [string, string, string];
+  treatment: Treatment;
   accent: string;
   mark: string;
   bg: string;
-  url: string;
+  /** Frame the sound cue fires on, per template. Silent renders ignore this. */
+  cue: { intro: number; outro: number };
 }
 
 export const TOKENS = {
   paper: '#F5F1EB',
   ink: '#0A0A0A',
   signal: '#F48022',
-  signalDeep: '#D96A14',
-  ocean: '#20557B',
-  tnsGold: '#A97F34',
-  tnsGoldBright: '#F4C668',
+  tnsGold: '#F3DC7D',
+  vibeSlate: '#1A2530',
+  vibeCyan: '#00C6EE',
 } as const;
 
-// Adding a show means adding an object here. Templates never change.
-// Note: tek FORUM uses #FF6A00, which is NOT the HNM signal orange
-// (#F48022). They are different oranges on purpose — don't merge them.
+// Four brands. THE TEK STACK and tek FORUM were dropped from this system.
+//
+// Each carries its own treatment because motion is derived from the mark's
+// own material — bars slice, gold takes light, paper registers, monospace
+// types. Swapping any treatment onto another brand would be wrong the same
+// way putting HNM's logo on Team No Sleep was wrong.
 export const ENTITIES: BrandEntity[] = [
   {
-    id: 'hnm', name: 'HicksNewMedia', parts: ['Hicks', 'New', 'Media'],
-    accent: TOKENS.signal, mark: TOKENS.paper, bg: TOKENS.ink, url: 'hicksnewmedia.com',
+    id: 'hnm',
+    name: 'HicksNewMedia',
+    treatment: 'glitch',
+    accent: TOKENS.signal,
+    mark: TOKENS.paper,
+    bg: TOKENS.ink,
+    cue: { intro: 32, outro: 60 },
   },
   {
-    id: 'tns', name: 'Team No Sleep', parts: ['Team ', 'No', ' Sleep'],
-    accent: TOKENS.tnsGoldBright, mark: TOKENS.paper, bg: TOKENS.ink, url: 'hnm.live',
+    id: 'tns',
+    name: 'Team No Sleep',
+    treatment: 'stamp',
+    accent: TOKENS.tnsGold,
+    mark: TOKENS.paper,
+    bg: TOKENS.ink,
+    cue: { intro: 14, outro: 20 },
   },
   {
-    id: 'tekstack', name: 'THE TEK STACK', parts: ['THE ', 'TEK', ' STACK'],
-    accent: TOKENS.signal, mark: TOKENS.paper, bg: TOKENS.ink, url: 'hicksnewmedia.com',
+    id: 'dc',
+    name: 'Digital Collective',
+    treatment: 'editorial',
+    accent: TOKENS.signal,
+    mark: TOKENS.paper,
+    bg: TOKENS.ink,
+    cue: { intro: 16, outro: 18 },
   },
   {
-    id: 'tekforum', name: 'tek FORUM', parts: ['tek ', 'FOR', 'UM'],
-    accent: '#FF6A00', mark: TOKENS.paper, bg: TOKENS.ink, url: 'tek.forum',
-  },
-  {
-    id: 'dc', name: 'Digital Collective', parts: ['Digital ', 'Coll', 'ective'],
-    accent: TOKENS.ocean, mark: TOKENS.paper, bg: TOKENS.ink, url: 'digitalcollective.media',
+    id: 'vibecode',
+    name: 'vibe.code',
+    treatment: 'terminal',
+    accent: TOKENS.vibeCyan,
+    mark: '#ECE8E2',
+    bg: TOKENS.vibeSlate,
+    cue: { intro: 8, outro: 10 },
   },
 ];
 

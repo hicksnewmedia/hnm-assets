@@ -1,68 +1,47 @@
-name: Render brand assets
+name: Render idents
 
 on:
   workflow_dispatch:
     inputs:
-      entity:
-        description: 'Entity id, comma-separated, or "all"'
-        required: true
-        default: 'hnm'
-      template:
-        description: 'intro | outro | lowerThird | all'
-        required: true
-        default: 'all'
-      orientation:
-        description: 'horizontal | vertical | all'
-        required: true
-        default: 'all'
-      format:
-        description: 'master | overlay | social | all'
-        required: true
-        default: 'all'
-  # Lets the Studio trigger a render through a Netlify function.
+      entity:      { description: 'hnm | tns | dc | vibecode | all', required: true, default: 'all' }
+      template:    { description: 'intro | outro | all', required: true, default: 'all' }
+      orientation: { description: 'horizontal | vertical | all', required: true, default: 'all' }
+      audio:       { description: 'silent | sfx | all', required: true, default: 'all' }
+      format:      { description: 'master | social | all', required: true, default: 'all' }
   repository_dispatch:
     types: [render-request]
 
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      # Remotion needs a real browser. Chromium is preinstalled on the
-      # ubuntu-latest runner, so point Remotion at it rather than letting
-      # it download its own copy on every run.
-      - name: Install Chromium dependencies
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - name: Chromium dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 \
-            libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
-            libxfixes3 libxrandr2 libgbm1 libasound2t64 ffmpeg
-
-      - name: Resolve render selection
+          sudo apt-get install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+            libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libasound2t64 ffmpeg
+      - name: Resolve selection
         id: sel
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "entity=${{ github.event.client_payload.entity || 'hnm' }}"           >> $GITHUB_OUTPUT
+            echo "entity=${{ github.event.client_payload.entity || 'all' }}"           >> $GITHUB_OUTPUT
             echo "template=${{ github.event.client_payload.template || 'all' }}"       >> $GITHUB_OUTPUT
             echo "orientation=${{ github.event.client_payload.orientation || 'all' }}" >> $GITHUB_OUTPUT
+            echo "audio=${{ github.event.client_payload.audio || 'all' }}"             >> $GITHUB_OUTPUT
             echo "format=${{ github.event.client_payload.format || 'all' }}"           >> $GITHUB_OUTPUT
           else
             echo "entity=${{ github.event.inputs.entity }}"           >> $GITHUB_OUTPUT
             echo "template=${{ github.event.inputs.template }}"       >> $GITHUB_OUTPUT
             echo "orientation=${{ github.event.inputs.orientation }}" >> $GITHUB_OUTPUT
+            echo "audio=${{ github.event.inputs.audio }}"             >> $GITHUB_OUTPUT
             echo "format=${{ github.event.inputs.format }}"           >> $GITHUB_OUTPUT
           fi
-
       - name: Render
         env:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
@@ -71,16 +50,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           node render/render.mjs \
-            --entity      "${{ steps.sel.outputs.entity }}" \
-            --template    "${{ steps.sel.outputs.template }}" \
+            --entity "${{ steps.sel.outputs.entity }}" \
+            --template "${{ steps.sel.outputs.template }}" \
             --orientation "${{ steps.sel.outputs.orientation }}" \
-            --format      "${{ steps.sel.outputs.format }}"
-
-      # Fallback so a render is never lost when R2 isn't configured yet.
+            --audio "${{ steps.sel.outputs.audio }}" \
+            --format "${{ steps.sel.outputs.format }}"
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
-        with:
-          name: brand-assets
-          path: out/
-          retention-days: 14
+        with: { name: idents, path: out/, retention-days: 14 }

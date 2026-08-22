@@ -1,13 +1,12 @@
 {
   "name": "hnm-assets",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "HicksNewMedia brand asset platform — assets.hicksnewmedia.com",
+  "description": "HicksNewMedia brand ident platform — assets.hicksnewmedia.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview",
     "remotion": "remotion studio src/index.ts",
     "render": "node render/render.mjs",
     "render:all": "node render/render.mjs --all",
@@ -15,12 +14,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@remotion/cli": "^4.0.0",
-    "@remotion/google-fonts": "^4.0.515",
-    "lucide-react": "^0.383.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remotion": "^4.0.0"
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/google-fonts": "^4.0.0",
+    "lucide-react": "^0.383.0"
   },
   "devDependencies": {
     "@types/node": "^22.5.0",

@@ -1,46 +1,34 @@
 import React from 'react';
 import { Composition } from 'remotion';
-import { BrandComposition } from './templates/Composition';
+import { Ident } from './Ident';
 import { ENTITIES } from './brand/entities';
-import { TIMING, FPS } from './motion/core';
-import { TemplateKey, Orientation } from './templates/GlitchFrame';
+import { FPS, DURATION, FRAME, TemplateKey, Orientation } from './motion/core';
 
-const SIZES: Record<Orientation, { width: number; height: number }> = {
-  horizontal: { width: 1920, height: 1080 },
-  vertical: { width: 1080, height: 1920 },
-};
-
-const TEMPLATES: TemplateKey[] = ['intro', 'outro', 'lowerThird'];
+const TEMPLATES: TemplateKey[] = ['intro', 'outro'];
 const ORIENTATIONS: Orientation[] = ['horizontal', 'vertical'];
 
-// Compositions are generated, not hand-written. 5 entities x 3 templates
-// x 2 orientations = 30 compositions from this loop. Adding a show adds
-// six more without touching this file.
+// 4 brands x 2 templates x 2 orientations = 16 compositions, generated.
+// Audio is a render-time prop, not a separate composition — silent and SFX
+// are the same 16 with the flag flipped.
 export const RemotionRoot: React.FC = () => (
   <>
     {ENTITIES.flatMap((entity) =>
-      TEMPLATES.flatMap((templateKey) =>
-        ORIENTATIONS.map((orientation) => {
-          const id = `${entity.id}-${templateKey}-${orientation}`;
-          return (
-            <Composition
-              key={id}
-              id={id}
-              component={BrandComposition}
-              durationInFrames={TIMING[templateKey].duration}
-              fps={FPS}
-              {...SIZES[orientation]}
-              defaultProps={{
-                entityId: entity.id,
-                templateKey,
-                orientation,
-                name: 'Guest Name',
-                role: 'Role or title',
-                transparent: false,
-              }}
-            />
-          );
-        }),
+      TEMPLATES.flatMap((template) =>
+        ORIENTATIONS.map((orientation) => (
+          <Composition
+            key={`${entity.id}-${template}-${orientation}`}
+            id={`${entity.id}-${template}-${orientation}`}
+            component={Ident}
+            durationInFrames={DURATION}
+            fps={FPS}
+            width={FRAME[orientation].W}
+            height={FRAME[orientation].H}
+            defaultProps={{
+              entityId: entity.id, template, orientation,
+              audio: false, transparent: false,
+            }}
+          />
+        )),
       ),
     )}
   </>
