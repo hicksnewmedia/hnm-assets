@@ -40,7 +40,7 @@ export const c01 = (x: number): number => Math.max(0, Math.min(1, x));
 export const easeOut = (t: number, p = 3): number => 1 - (1 - c01(t)) ** p;
 export const easeIn = (t: number, p = 2.3): number => c01(t) ** p;
 
-/** Normalised 0..1 progress across an inclusive frame window. */
+/** Normalized 0..1 progress across an inclusive frame window. */
 export const span = (frame: number, from: number, to: number): number =>
   c01((frame - from) / (to - from));
 

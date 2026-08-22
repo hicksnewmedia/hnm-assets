@@ -18,7 +18,7 @@
 //    feels wrong against picture.
 // 2. LOUDNESS. Eight cues sourced separately will not match. Nothing exposes
 //    a homemade ident faster than an outro noticeably louder than its intro.
-//    Everything is normalised to one EBU R128 target.
+//    Everything is normalized to one EBU R128 target.
 // 3. LENGTH. Anything past the frame-84 cut is inaudible but still inflates
 //    the file, so cues are capped to their usable window.
 

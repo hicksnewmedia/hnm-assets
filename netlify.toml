@@ -4,18 +4,6 @@
   command = "npm run build"
   publish = "dist"
 
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-# Function route MUST precede the SPA catch-all, or the catch-all swallows it
-# and /api/render returns index.html.
-[[redirects]]
-  from = "/api/render"
-  to = "/.netlify/functions/render-dispatch"
-  status = 200
-  force = true
-
 [[redirects]]
   from = "/*"
   to = "/index.html"

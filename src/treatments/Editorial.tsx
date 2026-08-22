@@ -37,7 +37,7 @@ export const Editorial: React.FC<TreatmentProps> = ({ frame, entity, template, o
   const theSize = 132 * s, dcSize = 400 * s, nameSize = 38 * s;
   const ruleW = 400 * s, ruleH = 13 * s;
 
-  // Vertical recentres the stack rather than cropping the horizontal layout.
+  // Vertical recenters the stack rather than cropping the horizontal layout.
   const baseY = vertical ? H / 2 - 190 : 366;
   const yThe = baseY;
   const yDc = baseY + 324 * s;
@@ -74,7 +74,7 @@ export const Editorial: React.FC<TreatmentProps> = ({ frame, entity, template, o
   }
 
   // A printed rule is laid down, not faded in — and it closes back toward
-  // centre on the way out rather than fading.
+  // center on the way out rather than fading.
   const eR = ex('rule');
   const ruleT = outro ? 1 : span(frame, T.ruleIn, T.ruleOut);
   if ((outro || frame >= T.ruleIn) && eR < 1) {

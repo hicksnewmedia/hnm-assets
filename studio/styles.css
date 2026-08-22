@@ -1,4 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body { font-family: 'Geist', system-ui, sans-serif; background: #0A0A0A; }
+
+body {
+  font-family: 'Geist', system-ui, sans-serif;
+  background: #F5F1EB;
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Range input styled for the light theme */
+input[type='range'] {
+  -webkit-appearance: none;
+  height: 4px;
+  background: #DDD6CC;
+  border-radius: 2px;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #F48022;
+  border-radius: 50%;
+  cursor: pointer;
+}

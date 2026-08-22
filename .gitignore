@@ -5,3 +5,5 @@ out
 .env.*
 .netlify
 .DS_Store
+audio-drop
+asset-drop

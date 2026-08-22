@@ -67,22 +67,6 @@ for (const [i, job] of jobs.entries()) {
   }
 }
 
-const bucket = process.env.R2_BUCKET, endpoint = process.env.R2_ENDPOINT;
-if (bucket && endpoint && process.env.AWS_ACCESS_KEY_ID) {
-  console.log('\n  Uploading to R2 …');
-  for (const r of results.filter((x) => x.status === 'rendered')) {
-    const key = `assets/${r.entity}/${r.outputName}`;
-    try {
-      execFileSync('aws', ['s3', 'cp', r.path, `s3://${bucket}/${key}`,
-        '--endpoint-url', endpoint, '--only-show-errors'], { stdio: 'pipe' });
-      r.remoteKey = key;
-      console.log(`    ${key}`);
-    } catch { console.error(`    upload failed: ${key}`); }
-  }
-} else {
-  console.log('\n  R2 not configured — files left in out/ only.');
-}
-
 writeFileSync(join(OUT, 'render-manifest.json'), JSON.stringify({
   renderedAt: new Date().toISOString(),
   total: results.length, rendered: results.length - failed, failed, assets: results,
