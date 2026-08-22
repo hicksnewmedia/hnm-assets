@@ -26,6 +26,12 @@ import committed from '../src/brand/library.json';
 
 const HANDLE_KEY = 'repo-handle';
 
+// The full publish chain. add stages, commit records locally, push is what
+// actually updates the live site — showing only `git add` taught exactly the
+// wrong lesson.
+const PUBLISH_CMD =
+  'git add public/brand/library src/brand/library.json && git commit -m "assets: library update" && git push';
+
 type Repo =
   | { state: 'none' }
   | { state: 'prompt'; handle: FileSystemDirectoryHandle; name: string }
@@ -104,6 +110,15 @@ export default function Library({ onToast }: { onToast: (m: string) => void }) {
       i.filter((x) => x.synced).map(({ sectionId, name, size, order }) => ({ sectionId, name, size, order })),
     ));
   }, []);
+
+  const copyPublish = async () => {
+    try {
+      await navigator.clipboard.writeText(PUBLISH_CMD);
+      onToast('Publish command copied — run it in the repo terminal');
+    } catch {
+      onToast('Clipboard blocked by the browser');
+    }
+  };
 
   const connect = async () => {
     try {
@@ -297,16 +312,26 @@ export default function Library({ onToast }: { onToast: (m: string) => void }) {
       {/* Connection strip — one line that tells you exactly where files go */}
       {fsSupported() ? (
         repo.state === 'connected' ? (
-          <div className="mb-6 flex items-center gap-2 border border-ink/15 bg-paper-raised p-3">
-            <FolderGit2 size={16} className="shrink-0 text-signal-deep" />
-            <p className="text-sm text-muted">
-              Connected to <strong className="text-ink">{repo.name}</strong> — drops write straight to{' '}
-              <code className="bg-ink/5 px-1 font-mono text-[13px] text-ink">public/brand/library/</code>.
-              {' '}Commit when ready:{' '}
-              <code className="bg-ink/5 px-1 font-mono text-[13px] text-ink">git add public/brand/library src/brand/library.json</code>
-            </p>
-            <button onClick={disconnect} className="ml-auto shrink-0 text-faint hover:text-ink" title="Disconnect">
-              <Unplug size={15} />
+          <div className="mb-6 border border-ink/15 bg-paper-raised p-3">
+            <div className="flex items-center gap-2">
+              <FolderGit2 size={16} className="shrink-0 text-signal-deep" />
+              <p className="text-sm text-muted">
+                Connected to <strong className="text-ink">{repo.name}</strong> — drops write straight to{' '}
+                <code className="bg-ink/5 px-1 font-mono text-[13px] text-ink">public/brand/library/</code>.
+                {' '}A drop puts the file on disk; publishing it to the live site takes all three git steps:
+              </p>
+              <button onClick={disconnect} className="ml-auto shrink-0 text-faint hover:text-ink" title="Disconnect">
+                <Unplug size={15} />
+              </button>
+            </div>
+            <button
+              onClick={() => copyPublish()}
+              className="group mt-2 flex w-full items-center gap-2 border border-ink/15 bg-ink/[0.04] px-3 py-2 text-left hover:border-ink/40"
+              title="Copy the full publish command">
+              <code className="min-w-0 flex-1 truncate font-mono text-[13px] text-ink">{PUBLISH_CMD}</code>
+              <span className="shrink-0 font-mono text-[12px] uppercase tracking-wider text-ink/30 group-hover:text-ink/70">
+                copy
+              </span>
             </button>
           </div>
         ) : (
