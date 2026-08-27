@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T19:29:16.800Z",
+  "generatedAt": "2026-08-27T19:15:26.900Z",
   "sections": [
     {
       "id": "logos",
@@ -23,6 +23,38 @@
     }
   ],
   "items": [
+    {
+      "sectionId": "overlays",
+      "name": "hnm-cta-subscribe-badge.png",
+      "file": "/brand/library/overlays/hnm-cta-subscribe-badge.png",
+      "ext": "png",
+      "size": 20133,
+      "order": 1
+    },
+    {
+      "sectionId": "overlays",
+      "name": "hnm-cta-subscribe-vertical.png",
+      "file": "/brand/library/overlays/hnm-cta-subscribe-vertical.png",
+      "ext": "png",
+      "size": 28402,
+      "order": 2
+    },
+    {
+      "sectionId": "overlays",
+      "name": "hnm-cta-subscribe.gif",
+      "file": "/brand/library/overlays/hnm-cta-subscribe.gif",
+      "ext": "gif",
+      "size": 815987,
+      "order": 3
+    },
+    {
+      "sectionId": "overlays",
+      "name": "hnm-cta-subscribe.mov",
+      "file": "/brand/library/overlays/hnm-cta-subscribe.mov",
+      "ext": "mov",
+      "size": 11807707,
+      "order": 4
+    },
     {
       "sectionId": "unsorted",
       "name": "tekforum_outro_landscape_storyboard_keyframe.png",
