@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T19:15:26.900Z",
+  "generatedAt": "2026-08-27T19:49:01.875Z",
   "sections": [
     {
       "id": "logos",
@@ -54,6 +54,38 @@
       "ext": "mov",
       "size": 11807707,
       "order": 4
+    },
+    {
+      "sectionId": "overlays",
+      "name": "tns-cta-subscribe-badge.png",
+      "file": "/brand/library/overlays/tns-cta-subscribe-badge.png",
+      "ext": "png",
+      "size": 180760,
+      "order": 5
+    },
+    {
+      "sectionId": "overlays",
+      "name": "tns-cta-subscribe-vertical.png",
+      "file": "/brand/library/overlays/tns-cta-subscribe-vertical.png",
+      "ext": "png",
+      "size": 191047,
+      "order": 6
+    },
+    {
+      "sectionId": "overlays",
+      "name": "tns-cta-subscribe.gif",
+      "file": "/brand/library/overlays/tns-cta-subscribe.gif",
+      "ext": "gif",
+      "size": 2156086,
+      "order": 7
+    },
+    {
+      "sectionId": "overlays",
+      "name": "tns-cta-subscribe.mov",
+      "file": "/brand/library/overlays/tns-cta-subscribe.mov",
+      "ext": "mov",
+      "size": 26912220,
+      "order": 8
     },
     {
       "sectionId": "unsorted",
