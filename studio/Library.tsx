@@ -29,8 +29,10 @@ const HANDLE_KEY = 'repo-handle';
 // The full publish chain. add stages, commit records locally, push is what
 // actually updates the live site — showing only `git add` taught exactly the
 // wrong lesson.
+// Starts with cd so one paste works from any terminal window. The path is
+// this deployment's repo location; change it here if the repo ever moves.
 const PUBLISH_CMD =
-  'git add public/brand/library src/brand/library.json && git commit -m "assets: library update" && git push';
+  'cd ~/dev/hnm-assets && git add public/brand/library src/brand/library.json && git commit -m "assets: library update" && git push';
 
 type Repo =
   | { state: 'none' }
@@ -315,11 +317,19 @@ export default function Library({ onToast }: { onToast: (m: string) => void }) {
           <div className="mb-6 border border-ink/15 bg-paper-raised p-3">
             <div className="flex items-center gap-2">
               <FolderGit2 size={16} className="shrink-0 text-signal-deep" />
-              <p className="text-sm text-muted">
-                Connected to <strong className="text-ink">{repo.name}</strong> — drops write straight to{' '}
-                <code className="bg-ink/5 px-1 font-mono text-[13px] text-ink">public/brand/library/</code>.
-                {' '}A drop puts the file on disk; publishing it to the live site takes all three git steps:
-              </p>
+              <div className="text-sm text-muted">
+                Connected to <strong className="text-ink">{repo.name}</strong>. Publishing an asset is
+                three steps, in order:
+                <ol className="mt-1 list-decimal space-y-0.5 pl-5">
+                  <li><strong className="text-ink">Drop files</strong> on a section below — the{' '}
+                    <span className="bg-signal px-1 font-mono text-[11px] uppercase text-ink">repo</span>{' '}
+                    tag means the file is on disk in{' '}
+                    <code className="bg-ink/5 px-1 font-mono text-[12px] text-ink">public/brand/library/</code></li>
+                  <li><strong className="text-ink">Click the command below</strong> to copy it</li>
+                  <li><strong className="text-ink">Open Terminal and paste</strong> (⌘V, then Return) — it
+                    cds into the repo, then adds, commits, and pushes. Netlify rebuilds in about a minute.</li>
+                </ol>
+              </div>
               <button onClick={disconnect} className="ml-auto shrink-0 text-faint hover:text-ink" title="Disconnect">
                 <Unplug size={15} />
               </button>
