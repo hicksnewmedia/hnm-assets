@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-27T19:49:01.875Z",
+  "generatedAt": "2026-08-27T20:24:41.415Z",
   "sections": [
     {
       "id": "logos",
@@ -86,6 +86,22 @@
       "ext": "mov",
       "size": 26912220,
       "order": 8
+    },
+    {
+      "sectionId": "overlays",
+      "name": "hnm-cta-subscribe.webm",
+      "file": "/brand/library/overlays/hnm-cta-subscribe.webm",
+      "ext": "webm",
+      "size": 28402,
+      "order": 9
+    },
+    {
+      "sectionId": "overlays",
+      "name": "tns-cta-subscribe.webm",
+      "file": "/brand/library/overlays/tns-cta-subscribe.webm",
+      "ext": "webm",
+      "size": 116356,
+      "order": 10
     },
     {
       "sectionId": "unsorted",
